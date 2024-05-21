@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Threejs Piano</title>
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	<canvas class="threejs"></canvas>
+	<div class="overlay">
+		<div class="center_div">
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+			<div class="wave"></div>
+		</div>
+		<h1 class="loading"><span id="brandName">X<strong>&</strong>R</span> Loading Experience... <span id="progressPercentage"></span>%</h1>
+	</div>
+	<button class="start">START</button>
+	<div class="music-toggle">
+		<button class="audio-toggle">
+			<div class="middle">
+				<div class="bar bar1"></div>
+				<div class="bar bar2"></div>
+				<div class="bar bar3"></div>
+				<div class="bar bar4"></div>
+				<div class="bar bar5"></div>
+				<div class="bar bar6"></div>
+			</div>
+		</button>
+	</div>
+	<script type="module" src="./index.js"></script>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+			const middle = document.querySelector('.middle');
+			middle.dataset.running = "true"; // Initialize the state as true when the document loads
+
+			middle.addEventListener('click', function () {
+				const bars = document.querySelectorAll('.bar');
+				if (this.dataset.running === "true") {
+					// Stop the animation and reset bars
+					bars.forEach(bar => {
+						bar.style.animation = 'none';
+						bar.style.transform = 'scaleY(0.1)';
+						bar.style.background = 'transparent';
+					});
+					this.dataset.running = "false";
+				} else {
+					// Restart the animation
+					bars.forEach((bar, index) => {
+						bar.style.animation = `loader 1.2s linear ${index * 0.1 + 0.1}s infinite`;
+					});
+					this.dataset.running = "true";
+				}
+			});
+		});
+	</script>
+</body>
+</html>

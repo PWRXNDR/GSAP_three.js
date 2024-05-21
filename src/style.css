@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=M+PLUS+Rounded+1c&display=swap');
+
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s;
+}
+
+#brandName {
+    font-size: 2em;
+    color: #ffffff; /* Gold color for brand name */
+    font-family: 'Sans Serif Collection';
+    display: block;
+    margin-left: 30%;
+    margin-bottom: 30%; /* Spacing between brand name and loading text */
+}
+
+strong {
+    color: deepskyblue;
+}
+
+.center_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    opacity: 0; /* Start with hidden waves */
+    animation: fadeIn 2s forwards; /* Animation to fade in */
+    animation-delay: 2s; /* Delay the start of the animation */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.wave {
+    width: 1.8rem;
+    height: 150px;
+    background-color: #ff6b6b;
+    margin: 0 4px;
+    border-radius: 0.4rem;
+    animation: wave 1.5s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes wave {
+    0% {
+        transform: scale(0);
+        filter: hue-rotate(90deg) blur(100px);
+    }
+
+    25% {
+        transform: scale(0);
+        filter: hue-rotate(120deg) blur(50px);
+    }
+
+    50% {
+        transform: scale(1);
+        filter: hue-rotate(180deg) blur(25px);
+    }
+
+    25% {
+        transform: scale(0);
+        filter: hue-rotate(360deg) blur(2px);
+    }
+
+    100% {
+        transform: scale(0);
+        filter: hue-rotate(0deg) blur(0);
+    }
+}
+
+.wave:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.wave:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.wave:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.wave:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.wave:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+.wave:nth-child(7) {
+    animation-delay: 0.6s;
+}
+
+.wave:nth-child(8) {
+    animation-delay: 0.7s;
+}
+
+.wave:nth-child(9) {
+    animation-delay: 0.8s;
+}
+
+.wave:nth-child(10) {
+    animation-delay: 0.9s;
+}
+
+.overlay.fade{
+    opacity:0;
+}
+
+.loading{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: transparent;
+    font-size: 2rem;
+    font-family: 'M PLUS Rounded 1c', cursive;
+    font-weight: 300;
+    font-style: normal;
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.loading.fade {
+    opacity: 0;
+}
+
+.start {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    color: white;
+    background-color: transparent;
+    font-size: 4rem;
+    font-family: 'M PLUS Rounded 1c', cursive;
+    font-weight: 300;
+    font-style: normal;
+    opacity: 0;
+    transition: opacity 0.5s;
+    display: none;
+}
+
+.start.fadeIn{
+    opacity:1;
+}
+
+.start.fadeOut{
+    opacity:0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .start:hover { color: deepskyblue; }
+  }
+
+.music-toggle {
+    justify-content: center;
+}
+
+.audio-toggle {
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: none; /* Keep hidden initially */
+    opacity: 0; /* Start invisible */
+    transition: opacity 0.5s ease; /* Smooth transition for opacity */
+}
+
+.middle {
+    display: flex; /* This will arrange the child .bar divs in a row */
+    align-items: flex-end; /* Aligns bars at the bottom */
+    justify-content: center; /* Center bars horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px; /* Total width to accommodate all bars */
+    height: 30px; /* Height should match the tallest bar */
+    cursor: pointer;
+}
+
+.bar {
+    width: 5px;
+    margin: 0 1px; /* Adds spacing between bars */
+    height: 30px;
+    display: inline-block;
+    transform-origin: bottom center;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    box-shadow: 2.5px 5px 10px inset rgb(99, 0, 242, 0.80); /* Yellow box shadow */
+    animation: loader 1.2s linear infinite;
+    background: transparent; /* Ensures background starts as transparent */
+}
+
+/* Animation and delay settings remain the same */
+.bar1 {
+    animation-delay: 0.1s;
+}
+
+.bar2 {
+    animation-delay: 0.2s;
+}
+
+.bar3 {
+    animation-delay: 0.3s;
+}
+
+.bar4 {
+    animation-delay: 0.4s;
+}
+
+.bar5 {
+    animation-delay: 0.5s;
+}
+
+.bar6 {
+    animation-delay: 0.6s;
+}
+
+@keyframes loader {
+    0%, 100% {
+        transform: scaleY(0.1);
+    }
+
+    50% {
+        transform: scaleY(1);
+        background: linear-gradient(to bottom, #a12bfc, #5300b1); /* Gradient from gold to yellow */
+    }
+}
+
+.stopped {
+    animation-play-state: paused; /* Pauses the animation */
+}
+
+
+
+.btn-shine {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 48px;
+  color: #fff;
+  background: linear-gradient(to right, #9f9f9f 0, #fff 10%, #868686 20%);
+  background-position: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite linear;
+  animation-fill-mode: forwards;
+  -webkit-text-size-adjust: none;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+}
+@-moz-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@-webkit-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@-o-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
