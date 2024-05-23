@@ -3,6 +3,8 @@ import App from "../App.js";
 import assetStore from "../Utils/AssetStore.js";
 import { PositionalAudio } from 'three';
 import gsap from 'gsap';
+import studio from "@theatre/studio";
+import * as core from '@theatre/core'
 
 export default class Environment {
     constructor() {
@@ -27,11 +29,16 @@ export default class Environment {
         }
 
         this.positions = [
-            new THREE.Vector3(0, 20, 100),
-            new THREE.Vector3(20, 20, 1),
-            new THREE.Vector3(10, 20, 10),
-            new THREE.Vector3(0, 10, 15)
+           new THREE.Vector3(0, 20, 100),
+           new THREE.Vector3(20.32, 26.06, 33.77), //start smooth path
+           new THREE.Vector3(33.53, 21.81, 14.76),
+           new THREE.Vector3(-8.24, 3.24, -15.87), //end smooth path
+           new THREE.Vector3(5.80, 8.45, 22.73),
+           new THREE.Vector3(9.98, 39.24, 12.38),
+           new THREE.Vector3(13.28, 13.57, 17.74),
+           new THREE.Vector3(-32.46, 27.03, 63.97),
         ];
+        this.smoothPathIndices = [1, 2, 3];
         this.currentPositionIndex = 0;
         this.isTransitioning = false; 
 
@@ -47,18 +54,52 @@ export default class Environment {
 
     setupScroll() {
         window.addEventListener('wheel', (event) => {
-            if (this.isTransitioning) return;  // Ignore scrolls during transitions
+            if (this.isTransitioning) return; // Ignore scrolls during transitions
 
-            this.isTransitioning = true;
-            if (event.deltaY > 0) {
-                this.currentPositionIndex = (this.currentPositionIndex + 1) % this.positions.length;
+            const nextIndex = event.deltaY > 0 ? (this.currentPositionIndex + 1) % this.positions.length : (this.currentPositionIndex - 1 + this.positions.length) % this.positions.length;
+
+            // Check if the next position is within the smooth path
+            if (this.smoothPathIndices.includes(nextIndex) && this.smoothPathIndices.includes(this.currentPositionIndex)) {
+                this.smoothCameraTransition(nextIndex);
             } else {
-                this.currentPositionIndex = (this.currentPositionIndex - 1 + this.positions.length) % this.positions.length;
+                this.moveToPosition(nextIndex);
             }
-            this.camera.moveToPosition(this.positions[this.currentPositionIndex], () => {
-                this.isTransitioning = false;  // Reset the flag after animation
-            });
         });
+    }
+
+    moveToPosition(index) {
+        this.isTransitioning = true;
+        gsap.to(this.camera.instance.position, {
+            duration: 1,
+            x: this.positions[index].x,
+            y: this.positions[index].y,
+            z: this.positions[index].z,
+            ease: 'power1.inOut',
+            onComplete: () => {
+                this.isTransitioning = false;
+            }
+        });
+        this.currentPositionIndex = index;
+    }
+
+    smoothCameraTransition(nextIndex) {
+        this.isTransitioning = true;
+        const path = this.positions.slice(Math.min(this.currentPositionIndex, nextIndex), Math.max(this.currentPositionIndex, nextIndex) + 1);
+        const timeline = gsap.timeline({
+            onComplete: () => this.isTransitioning = false
+        });
+
+        path.forEach((position, i) => {
+            timeline.to(this.camera.instance.position, {
+                duration: 1.5, // Adjust duration as needed
+                x: position.x,
+                y: position.y,
+                z: position.z,
+                ease: 'expoScale(0.5, 7, none)' // Using expoScale ease for smooth effect
+            }, i * 0); // Adjust stagger timing as needed
+        });
+
+        this.currentPositionIndex = nextIndex;
     }
 
     setupAudio(play = false) {

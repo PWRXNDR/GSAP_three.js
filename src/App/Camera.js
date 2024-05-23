@@ -63,6 +63,8 @@ export default class Camera{
     }
 
     loop() {
-        this.controls.update()
+        this.controls.update();
+        //console.log(`Camera Position: x=${this.instance.position.x.toFixed(2)}, y=${this.instance.position.y.toFixed(2)}, z=${this.instance.position.z.toFixed(2)}`);
+        requestAnimationFrame(this.loop.bind(this));
         }
     }
