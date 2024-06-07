@@ -21,7 +21,7 @@ export default class Environment {
         this.assetStore = assetStore.getState()
         this.environment = this.assetStore.loadedAssets.environment
         this.audioListener = new THREE.AudioListener();
-        // Ensure the camera instance is available and properly initialized
+        
         if (this.app.camera && this.app.camera.instance) {
             this.app.camera.instance.add(this.audioListener);
         } else {
