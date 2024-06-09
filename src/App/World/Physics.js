@@ -10,7 +10,7 @@ export default class Physics {
    * Creates an instance of Physics.
    */
   constructor() {
-    // getting the app instance
+    
     this.app = new App();
     this.scene = this.app.scene;
 
